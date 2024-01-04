@@ -1,23 +1,21 @@
 // auth.guard.ts
 import { Injectable } from '@angular/core';
-import { CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { AuthService } from './auth.service';
+import { CanActivate, Router } from '@angular/router';
+import { AuthUtils } from './shared/utils/auth-ultis';
+
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivateChild {
-  constructor(private authService: AuthService, private router: Router) {}
 
-  canActivateChild(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): boolean {
-    if (this.authService.isLoggedIn()) {
-      return true; // Allow access to child routes if the user is logged in
+export class AuthGuard implements CanActivate {
+  constructor(private router: Router) {}
+
+  canActivate(): boolean {
+    if (AuthUtils.isAuthenticated() && AuthUtils.isAdmin()) {
+      return true; // Nếu người dùng đã đăng nhập và là admin, cho phép truy cập route
     } else {
-      // If not logged in, redirect to the login page and save the current URL
-      this.authService.redirectUrl = state.url;
+      // Nếu chưa đăng nhập hoặc không phải là admin, chuyển hướng đến trang đăng nhập
       this.router.navigate(['/login']);
       return false;
     }

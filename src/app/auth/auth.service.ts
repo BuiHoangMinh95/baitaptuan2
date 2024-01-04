@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FakeApiService } from '../fake-api.service';
+import { User } from './shared/models/user';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,14 @@ export class AuthService {
     // Gọi API giả lập xác thực
     return this.fakeApiService.authenticate(username, password);
   }
+  
+  getCurrentUser(): User | null {
+    // Lấy thông tin người dùng từ nơi nào đó (ví dụ: local storage)
+    const userData = localStorage.getItem('currentUser');
 
+    // Chuyển đổi dữ liệu thành đối tượng User nếu có
+    return userData ? JSON.parse(userData) : null;
+  }
   saveToken(token: string): void {
     localStorage.setItem(this.tokenKey, token);
   }
