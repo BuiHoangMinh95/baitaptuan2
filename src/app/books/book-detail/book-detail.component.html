@@ -1,0 +1,21 @@
+<!-- book-detail.component.html -->
+<div class="container">
+  <div *ngIf="book" class="mt-4">
+    <img [src]="book.image" alt="Book Cover" class="img-fluid" />
+    <h2>{{ book.title }}</h2>
+    <p>Author: {{ book.author }}</p>
+    <p>Price: {{ book.price | currency }}</p>
+    <p>Quantity: {{ book.quantity }}</p>
+    <p>Description: {{ book.description }}</p>
+    <p>Category: {{ book.category.join(', ') }}</p>
+    <p>Published Year: {{ book.year }}</p>
+    <p>User Ratings:</p>
+    <ul>
+      <li *ngFor="let rating of book.rating">
+        {{ rating.username }} - {{ rating.score }} stars
+      </li>
+    </ul>
+    <button (click)="addToCart(book)" class="btn btn-primary">Add to Cart</button>
+    <button (click)="goBack()" class="btn btn-secondary">Go Back to Book List</button>
+  </div>
+</div>

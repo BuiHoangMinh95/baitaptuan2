@@ -1,0 +1,48 @@
+[
+    {
+      "id": 1,
+      "title": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald",
+      "price": 15.99,
+      "quantity": 50,
+      "description": "A classic novel about the American Dream.",
+      "category": ["Fiction", "Classic"],
+      "year": 1925,
+      "rating": [
+        { "username": "user1", "score": 4 },
+        { "username": "user2", "score": 5 }
+      ],
+      "image": "https://www.w3schools.com/html/pic_trulli.jpg"
+    },
+    {
+      "id": 2,
+      "title": "To Kill a Mockingbird",
+      "author": "Harper Lee",
+      "price": 12.99,
+      "quantity": 30,
+      "description": "A novel that addresses issues of racism and injustice.",
+      "category": ["Fiction", "Classic"],
+      "year": 1960,
+      "rating": [
+        { "username": "user3", "score": 5 },
+        { "username": "user4", "score": 4 }
+      ],
+      "image": "https://www.w3schools.com/html/pic_trulli.jpg"
+    },
+    {
+      "id": 3,
+      "title": "1984",
+      "author": "George Orwell",
+      "price": 14.99,
+      "quantity": 40,
+      "description": "A dystopian novel exploring the dangers of totalitarianism.",
+      "category": ["Fiction", "Dystopian"],
+      "year": 1949,
+      "rating": [
+        { "username": "user5", "score": 5 },
+        { "username": "user6", "score": 3 }
+      ],
+      "image": "https://www.w3schools.com/html/pic_trulli.jpg"
+    }
+  ]
+  

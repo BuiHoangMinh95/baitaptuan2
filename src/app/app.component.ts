@@ -1,6 +1,7 @@
 // app.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     // Thực hiện chuyển hướng khi ứng dụng khởi chạy
-    this.router.navigate(['/login']);
+    // this.router.navigate(['/login']);
   }
 }

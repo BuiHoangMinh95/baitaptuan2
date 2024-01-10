@@ -1,0 +1,73 @@
+<!-- book-list.component.html -->
+<div class="container mt-4">
+  <!-- Add a search bar -->
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Search books..." [(ngModel)]="searchKeyword" />
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" type="button" (click)="searchBooks()">Search</button>
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-md-12">
+      <label for="sortCriteria">Sort By:</label>
+      <select class="form-control" id="sortCriteria" [(ngModel)]="selectedSortCriteria" (change)="sortBooks()">
+        <option value="title">Title</option>
+        <option value="author">Author</option>
+        <option value="price">Price</option>
+        <option value="quantity">Quantity</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Display the sortedBooks -->
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <h2>Book List</h2>
+
+      <!-- Table to display books -->
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Author</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let book of sortedBooks">
+            <th scope="row">{{ book.id }}</th>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.price | currency }}</td>
+            <td>{{ book.quantity }}</td>
+            <td>
+              <button class="btn btn-primary btn-sm" (click)="viewDetails(book)">View Details</button>
+              <button class="btn btn-success btn-sm" (click)="addToCart(book)">Add to Cart</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- Form to add a new book -->
+<form (submit)="addBook()">
+  <!-- Title -->
+  <div class="form-group">
+    <label for="title">Title:</label>
+    <input type="text" class="form-control" id="title" name="title" [(ngModel)]="newBook.title" required>
+  </div>
+
+  <!-- Author -->
+  <div class="form-group">
+    <label for="author">Author:</label>
+    <input type="text" class="form-control" id="author" name="author" [(ngModel)]="newBook.author" required>
+  </div>
+
+  <!-- ... (other form controls) ... -->
+
+  <button type="submit" class="btn btn-primary">Add Book</button>
+</form>
