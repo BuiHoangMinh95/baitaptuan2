@@ -1,23 +1,29 @@
 // auth.guard.ts
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
-import { AuthUtils } from './shared/utils/auth-ultis';
-
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
-
 export class AuthGuard implements CanActivate {
-  constructor(private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(): boolean {
-    if (AuthUtils.isAuthenticated() && AuthUtils.isAdmin()) {
-      return true; // Nếu người dùng đã đăng nhập và là admin, cho phép truy cập route
+  canActivate(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+    return this.checkAccess(state.url);
+  }
+
+  private checkAccess(url: string): boolean | UrlTree {
+    if (this.authService.isLoggedIn()) {
+      return true;
     } else {
-      // Nếu chưa đăng nhập hoặc không phải là admin, chuyển hướng đến trang đăng nhập
-      this.router.navigate(['/login']);
-      return false;
+      window.alert('You need to log in to access this page.');
+      this.authService.redirectUrl = url;
+      return this.router.parseUrl('/login');
     }
   }
 }

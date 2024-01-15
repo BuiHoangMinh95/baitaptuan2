@@ -1,14 +1,18 @@
 // app-routing.module.ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './auth/login/login.component';
-
+import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
-  { path: 'books', loadChildren: () => import('./books/books.module').then(m => m.BooksModule) },
-  { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: '/books', pathMatch: 'full' }, // Default route
-  // Thêm các route khác nếu cần thiết
+  {
+    path: '',
+    loadChildren: () => import('./books/books.module').then(m => m.BooksModule)
+  },
+  {
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
+    // AuthGuard can be applied to the entire auth module or specific routes within it
+  },
 ];
 
 @NgModule({

@@ -1,7 +1,7 @@
 // app.component.ts
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from './auth/auth.service';
 import { Router } from '@angular/router';
-import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +9,23 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
+
+  isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
+  }
+
+  logout(): void {
+    this.authService.logout();
+  }
 
   ngOnInit() {
-    // Thực hiện chuyển hướng khi ứng dụng khởi chạy
-    // this.router.navigate(['/login']);
+    if(this.isLoggedIn()) {
+      this.router.navigate(['/books']);
+    } else {
+      
+      this.router.navigate(['/login']);
+    }
+   
   }
 }

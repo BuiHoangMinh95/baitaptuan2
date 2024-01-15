@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { BooksService } from '../books.service';
 import { Observable } from 'rxjs';
 import { Book } from '../share/models/book';
+import { v4 as uuidv4 } from 'uuid'; // Import UUID library
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-book-list',
@@ -10,31 +12,52 @@ import { Book } from '../share/models/book';
   styleUrls: ['./book-list.component.css'],
 })
 export class BookListComponent implements OnInit {
+  [x: string]: any;
   searchKeyword: string = '';
   books: Book[] | undefined;
   sortedBooks: Book[] | undefined;
   categories: string[] = [];
   selectedCategory: string | undefined;
   selectedSortCriteria: string = 'title';
-  
-  newBook: Book = {
-    id: 0,
-    title: '',
-    author: '',
-    price: 0,
-    quantity: 0,
-    description: '',
-    category: [],
-    year: 0,
-    rating: [],
-    image: '',
-  };
 
-  constructor(private booksService: BooksService, private router: Router) {}
+  newBookForm: FormGroup;
+  updateBookForm: FormGroup ;
+  isUpdateModalOpen: boolean = false;
+  
+  constructor(
+    private booksService: BooksService, 
+    private router: Router,
+    private formBuilder: FormBuilder
+  ) {
+    this.newBookForm = this.formBuilder.group({
+      title: ['', Validators.required],
+      author: ['', Validators.required],
+      price: [0, Validators.required],
+      quantity: [0, Validators.required],
+      description: [''],
+      category: [[]],
+      year: [0, Validators.required],
+      rating: [[]],
+      image: [''],
+    });
+    this.updateBookForm = this.formBuilder.group({
+      id:['', Validators.required],
+      title: ['', Validators.required],
+      author: ['', Validators.required],
+      price: [0, Validators.required],
+      quantity: [0, Validators.required],
+      description: [''],
+      category: [[]],
+      year: [0, Validators.required],
+      rating: [[]],
+      image: [''],
+    });
+  }
 
   ngOnInit(): void {
     this.getBooks();
     this.getCategories();
+   
   }
 
   getBooks(): void {
@@ -83,29 +106,74 @@ export class BookListComponent implements OnInit {
   }
   
   addBook(): void {
-    this.booksService.addBook(this.newBook).subscribe(
-      (addedBook: Book) => {
-        // Optionally, you can do something with the added book
-        console.log('Book added:', addedBook);
+    if (this.newBookForm.valid) {
+      this.booksService.addBook(this.newBookForm.value).subscribe(
+        (addedBook: Book) => {
+          // Optionally, you can do something with the added book
+          console.log('Book added:', addedBook);
 
-        // Clear the form after successful addition
-        this.newBook = {
-          id: 0,
-          title: '',
-          author: '',
-          price: 0,
-          quantity: 0,
-          description: '',
-          category: [],
-          year: 0,
-          rating: [],
-          image: '',
-        };
-      },
-      (error: any) => {
-        console.error('Error adding book:', error);
-      }
-    );
+          // Clear the form after successful addition
+          this.newBookForm.reset();
+        },
+        (error: any) => {
+          console.error('Error adding book:', error);
+        },
+        () => {
+          this.getBooks();
+        }
+      );
+    } else {
+      // Form is not valid, handle validation errors or show a message
+      console.error('Form is not valid.');
+    }
+  }
+
+  // Method to delete a book
+  deleteBook(bookId: string): void {
+    if (confirm('Are you sure you want to delete this book?')) {
+      this.booksService.deleteBook(bookId).subscribe(
+        () => {
+          // Remove the deleted book from the local list
+          this.books = this.books?.filter(book => book.id.toString() !== bookId);
+          this.sortedBooks = [...this.books!];
+        },
+        (error: any) => {
+          console.error('Error deleting book:', error);
+        },
+        () => {
+          this.getBooks();
+        }
+      );
+    }
+  }
+  updateBook(): void {
+    if (this.updateBookForm.valid) {
+      console.log(this.updateBookForm)
+      const updatedBook = { ...this.updateBookForm.value };
+      this.booksService.updateBook(updatedBook).subscribe(
+        (result) => {
+          console.log('Book updated:', result);
+          // Close the modal after updating
+          this.closeUpdateModal();
+          // Optionally, you can refresh the book list or perform other actions
+          this.getBooks();
+        },
+        (error) => {
+          console.error('Error updating book:', error);
+        },
+        () => {
+          this.getBooks();
+        }
+      );
+    }
+  }
+
+  openUpdateModal(): void {
+    this.isUpdateModalOpen = true;
+  }
+
+  closeUpdateModal(): void {
+    this.isUpdateModalOpen = false;
   }
   
 
