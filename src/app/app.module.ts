@@ -8,6 +8,8 @@ import { BooksModule } from './books/books.module';
 import { RouterModule } from '@angular/router';
 import { RouterTestingModule } from "@angular/router/testing";
 import { HttpClientModule } from '@angular/common/http';
+import { CartModule } from './cart/cart.module';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -15,11 +17,13 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   imports: [
     BrowserModule,
-    AuthModule,
-    BooksModule,
     RouterTestingModule,
     RouterModule,
-    HttpClientModule
+    HttpClientModule,
+    AuthModule,
+    BooksModule,
+    CartModule,
+    AppRoutingModule
   ],
   providers: [
     FakeApiService  

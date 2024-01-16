@@ -2,15 +2,16 @@
 <div class="container mt-4">
   <!-- Add a search bar -->
   <div class="input-group mb-3">
-    <input type="text" class="form-control" placeholder="Search books..." [(ngModel)]="searchKeyword" />
+    <input type="text" [(ngModel)]="searchKeyword" (input)="searchBooks()" placeholder="Search...">
     <div class="input-group-append">
       <button class="btn btn-outline-secondary" type="button" (click)="searchBooks()">Search</button>
     </div>
   </div>
+  <span>Note: seach by id</span>
   <div class="row mt-2">
     <div class="col-md-12">
       <label for="sortCriteria">Sort By:</label>
-      <select class="form-control" id="sortCriteria" [(ngModel)]="selectedSortCriteria" (change)="sortBooks()">
+      <select class="form-control" (change)="sortBooks()">
         <option value="title">Title</option>
         <option value="author">Author</option>
         <option value="price">Price</option>
@@ -61,59 +62,82 @@
   <!-- Title -->
   <div class="form-group">
     <label for="title">Title:</label>
-    <input type="text" class="form-control" id="title" name="title" required>
+    <input type="text" class="form-control" id="title"  formControlName="title" required>
+
+    <div *ngIf="newBookForm.get('title')?.touched  && (newBookForm.get('title')?.dirty || newBookForm.get('title')?.touched)" class="invalid-feedback show">
+      <div *ngIf="newBookForm.get('title')?.errors?.['required']">Name is required.</div>
+      <div *ngIf="newBookForm.get('title')?.errors?.['minlength']">
+        Name must be at least 4 characters long.
+      </div>
+    </div>
+    
   </div>
+   <!-- Display validation messages for title -->
+    
 
   <!-- Author -->
   <div class="form-group">
     <label for="author">Author:</label>
-    <input type="text" class="form-control" id="author" name="author"  required>
+    <input type="text" class="form-control" id="author" formControlName="author">
+    <div *ngIf="newBookForm.get('author')?.touched  && (newBookForm.get('author')?.dirty || newBookForm.get('author')?.touched)" class="invalid-feedback show">
+      <div *ngIf="newBookForm.get('author')?.errors?.['required']">Author is required.</div>
+      <div *ngIf="newBookForm.get('author')?.errors?.['minlength']">
+        Author must be at least 4 characters long.
+      </div>
+    </div>
   </div>
 
   <!-- Price -->
   <div class="form-group">
     <label for="price">Price:</label>
-    <input type="number" class="form-control" id="price" name="price"  required>
+    <input type="number" class="form-control" id="price" formControlName="price">
+    <div *ngIf="newBookForm.get('price')?.touched  && (newBookForm.get('price')?.dirty || newBookForm.get('price')?.touched)" class="invalid-feedback show">
+      <div *ngIf="newBookForm.get('price')?.errors?.['required']">price is required.</div>
+    </div>
   </div>
 
   <!-- Quantity -->
   <div class="form-group">
     <label for="quantity">Quantity:</label>
-    <input type="number" class="form-control" id="quantity" name="quantity"  required>
+    <input type="number" class="form-control" id="quantity"  formControlName="quantity">
+    <div *ngIf="newBookForm.get('quantity')?.touched  && (newBookForm.get('quantity')?.dirty || newBookForm.get('quantity')?.touched)" class="invalid-feedback show">
+      <div *ngIf="newBookForm.get('quantity')?.errors?.['required']">quantity is required.</div>
+    </div>
   </div>
 
   <!-- Description -->
   <div class="form-group">
     <label for="description">Description:</label>
-    <textarea class="form-control" id="description" name="description"  required></textarea>
+    <textarea class="form-control" id="description" formControlName="description"></textarea>
   </div>
 
   <!-- Category -->
   <div class="form-group">
     <label for="category">Category:</label>
-    <input type="text" class="form-control" id="category" name="category"  required>
+    <input type="text" class="form-control" id="category" formControlName="category">
   </div>
 
   <!-- Year -->
   <div class="form-group">
     <label for="year">Year:</label>
-    <input type="number" class="form-control" id="year" name="year" >
+    <input type="number" class="form-control" id="year" formControlName="year">
   </div>
 
   <!-- Rating -->
   <div class="form-group">
     <label for="rating">Rating:</label>
-    <input type="number" class="form-control" id="rating" name="rating"  >
+    <input type="number" class="form-control" id="rating"  formControlName="rating">
   </div>
 
   <!-- Image -->
   <div class="form-group">
     <label for="image">Image URL:</label>
-    <input type="text" class="form-control" id="image" name="image" >
+    <input type="text" class="form-control" id="image"  formControlName="image">
   </div>
 
   <button type="submit" class="btn btn-primary">Add Book</button>
 </form>
+
 <!-- modal update book -->
 
 <!-- Inside your component's HTML file -->

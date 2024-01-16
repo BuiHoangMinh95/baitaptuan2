@@ -2,10 +2,10 @@
   "books": [
     {
       "id": "1",
-      "title": "The Great Gatsby2123",
-      "author": "F. Scott Fitzgerald",
+      "title": "T22132123",
+      "author": "F. Scott Fitzgerald231",
       "price": 15.99123,
-      "quantity": 501,
+      "quantity": 50134,
       "description": "A classic novel about the American Dream.",
       "category": [
         "Fiction",
@@ -95,6 +95,19 @@
         }
       ],
       "image": "https://www.w3schools.com/html/pic_trulli.jpg"
+    },
+    {
+      "id": "366f8303-9ebc-40e9-be4e-d526bb4c7087",
+      "title": "dev",
+      "author": "",
+      "price": 0,
+      "quantity": 0,
+      "description": "",
+      "category": [],
+      "year": 0,
+      "rating": [],
+      "image": ""
     }
-  ]
+  ],
+  "cart": []
 }

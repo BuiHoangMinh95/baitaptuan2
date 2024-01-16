@@ -1,6 +1,6 @@
 // books.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { map } from 'rxjs/operators';
@@ -39,17 +39,23 @@ export class BooksService {
     );
   }
 
-  searchBooks(keyword: string): Observable<Book[]> {
-    return this.http.get<Book[]>(`${this.apiUrl}/search?keyword=${keyword}`);
+  searchBooksByKeyword(keyword: string): Observable<Book[]> {
+    const url = `${this.apiUrl}?id=${keyword}`;
+    return this.http.get<Book[]>(url);
   }
 
   filterBooksByCategory(category: string): Observable<Book[]> {
     return this.http.get<Book[]>(`${this.apiUrl}/filter?category=${category}`);
   }
 
-  sortBooksBy(criteria: string): Observable<Book[]> {
-    return this.http.get<Book[]>(`${this.apiUrl}/sort?criteria=${criteria}`);
+  sortBooksBy(): Observable<Book[]> {
+    // Create query parameters to sort by 'id' in ascending order and 'views' in descending order
+    const params = new HttpParams().set('_sort', 'id,-views');
+
+    // Send a GET request with the query parameters
+    return this.http.get<Book[]>(this.apiUrl, { params });
   }
+
   getCategories(): Observable<string[]> {
     return this.http.get<string[]>('assets/categories.json');
   }

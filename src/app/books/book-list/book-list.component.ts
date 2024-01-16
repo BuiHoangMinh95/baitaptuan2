@@ -30,25 +30,35 @@ export class BookListComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.newBookForm = this.formBuilder.group({
-      title: ['', Validators.required],
-      author: ['', Validators.required],
+      title: ['', [
+        Validators.required,
+        Validators.minLength(4)
+      ]],
+      author: ['', [
+        Validators.required,
+        Validators.minLength(4)
+      ]],
       price: [0, Validators.required],
       quantity: [0, Validators.required],
       description: [''],
       category: [[]],
-      year: [0, Validators.required],
+      year: [0],
       rating: [[]],
       image: [''],
     });
+    
     this.updateBookForm = this.formBuilder.group({
       id:['', Validators.required],
-      title: ['', Validators.required],
+      title: ['', [
+        Validators.required,
+        Validators.minLength(4)
+      ]],
       author: ['', Validators.required],
       price: [0, Validators.required],
       quantity: [0, Validators.required],
       description: [''],
       category: [[]],
-      year: [0, Validators.required],
+      year: [0],
       rating: [[]],
       image: [''],
     });
@@ -95,8 +105,9 @@ export class BookListComponent implements OnInit {
   }
 
   sortBooks(): void {
-    this.booksService.sortBooksBy(this.selectedSortCriteria).subscribe(
+    this.booksService.sortBooksBy().subscribe(
       (sortedBooks: Book[]) => {
+        console.log(sortedBooks);
         this.sortedBooks = sortedBooks;
       },
       (error: any) => {
@@ -104,6 +115,7 @@ export class BookListComponent implements OnInit {
       }
     );
   }
+  
   
   addBook(): void {
     if (this.newBookForm.valid) {
@@ -127,7 +139,8 @@ export class BookListComponent implements OnInit {
       console.error('Form is not valid.');
     }
   }
-
+ 
+  
   // Method to delete a book
   deleteBook(bookId: string): void {
     if (confirm('Are you sure you want to delete this book?')) {
@@ -194,12 +207,12 @@ export class BookListComponent implements OnInit {
 
   searchBooks(): void {
     if (this.searchKeyword.trim() !== '') {
-      this.booksService.searchBooks(this.searchKeyword).subscribe(
+      this.booksService.searchBooksByKeyword(this.searchKeyword).subscribe(
         (searchedBooks: Book[]) => {
           this.sortedBooks = searchedBooks;
         },
         (error: any) => {
-          console.error('Error searching books:', error);
+          console.error('Error searching books by keyword:', error);
         }
       );
     } else {
