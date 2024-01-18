@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Book } from '../share/models/book';
 import { v4 as uuidv4 } from 'uuid'; // Import UUID library
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CartService } from 'src/app/cart/cart.service';
 
 @Component({
   selector: 'app-book-list',
@@ -27,7 +28,8 @@ export class BookListComponent implements OnInit {
   constructor(
     private booksService: BooksService, 
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private cartService: CartService,
   ) {
     this.newBookForm = this.formBuilder.group({
       title: ['', [
@@ -101,7 +103,7 @@ export class BookListComponent implements OnInit {
 
   addToCart(book: Book): void {
     // Implement the logic to add the book to the shopping cart
-    console.log('Add to cart:', book);
+    this.cartService.addToCart(book);
   }
 
   sortBooks(): void {

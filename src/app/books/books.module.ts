@@ -6,6 +6,7 @@ import { BookListComponent } from './book-list/book-list.component';
 import { BooksRoutingModule } from './books-routing.routing';
 import { FormsModule,ReactiveFormsModule  } from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid';
+import { CartService } from '../cart/cart.service';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { v4 as uuidv4 } from 'uuid';
   ],
   providers: [
     { provide: 'UUID', useValue: uuidv4 }, // Use the 'UUID' token for injection
+    CartService
   ],
 })
 export class BooksModule { }

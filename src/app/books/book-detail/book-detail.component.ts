@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BooksService } from '../books.service';
+import { CartService } from 'src/app/cart/cart.service';
 
 @Component({
   selector: 'app-book-detail',
@@ -14,7 +15,8 @@ export class BookDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private booksService: BooksService
+    private booksService: BooksService,
+    private cartService: CartService
   ) {}
 
   ngOnInit() {
@@ -35,7 +37,7 @@ export class BookDetailComponent implements OnInit {
 
   addToCart(book: any) {
     // Implement your add to cart logic here
-    console.log('Book added to cart:', book);
+    this.cartService.addToCart(book);
   }
 
   goBack() {
