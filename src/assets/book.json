@@ -107,7 +107,47 @@
       "year": 0,
       "rating": [],
       "image": ""
+    },
+    {
+      "id": "5730bf47-5601-41bb-ad60-b863e346f067",
+      "title": "dev2",
+      "author": "dev2",
+      "price": 123,
+      "quantity": 0,
+      "description": "",
+      "category": [],
+      "year": 0,
+      "rating": [],
+      "image": ""
     }
   ],
-  "cart": []
+  "admins": [
+    {
+      "username": "admin1123",
+      "password": "admin123",
+      "email": "admin1@example.com",
+      "fullName": "Admin One",
+      "phoneNumber": "123456789",
+      "address": "123 Street, City",
+      "id": "1"
+    },
+    {
+      "username": "admin2123",
+      "password": "admin456",
+      "email": "admin2@example.com",
+      "fullName": "Admin Two",
+      "phoneNumber": "987654321",
+      "address": "456 Street, City",
+      "id": "2"
+    },
+    {
+      "id": "1705650270165",
+      "username": "dev213",
+      "password": "dádf",
+      "email": "dev20102015@gmail.com",
+      "fullName": "Admin One",
+      "phoneNumber": "987654321",
+      "address": "123 Street, City"
+    }
+  ]
 }

@@ -10,6 +10,7 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { HttpClientModule } from '@angular/common/http';
 import { CartModule } from './cart/cart.module';
 import { AppRoutingModule } from './app-routing.module';
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AppRoutingModule } from './app-routing.module';
     AuthModule,
     BooksModule,
     CartModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AdminModule
   ],
   providers: [
     FakeApiService  

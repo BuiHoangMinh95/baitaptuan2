@@ -11,12 +11,17 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
-    // AuthGuard can be applied to the entire auth module or specific routes within it
+   
   },
   {
     path: 'cart',
     loadChildren: () => import('./cart/cart.module').then(m => m.CartModule),
-    // AuthGuard can be applied to the entire auth module or specific routes within it
+  
+  },
+  {
+    path: '',
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
+   
   },
 ];
 
