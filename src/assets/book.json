@@ -123,31 +123,45 @@
   ],
   "admins": [
     {
-      "username": "admin1123",
-      "password": "admin123",
+      "username": "admin",
+      "password": "admin",
       "email": "admin1@example.com",
       "fullName": "Admin One",
       "phoneNumber": "123456789",
       "address": "123 Street, City",
-      "id": "1"
+      "id": "1",
+      "roles": "admin"
     },
     {
-      "username": "admin2123",
-      "password": "admin456",
+      "username": "user",
+      "password": "user",
       "email": "admin2@example.com",
       "fullName": "Admin Two",
       "phoneNumber": "987654321",
       "address": "456 Street, City",
-      "id": "2"
+      "id": "2",
+      "roles": "user"
     },
     {
-      "id": "1705650270165",
       "username": "dev213",
       "password": "dádf",
       "email": "dev20102015@gmail.com",
-      "fullName": "Admin One",
+      "fullName": "Admin One2",
       "phoneNumber": "987654321",
-      "address": "123 Street, City"
+      "address": "123 Street, City",
+      "id": "1705650270165",
+      "roles": "user"
+    },
+    {
+      "id": "1706081772637",
+      "username": "dev213",
+      "password": "dev",
+      "repeatPassword": "dev",
+      "email": "dev20102015@gmail.com",
+      "fullName": "dev",
+      "phoneNumber": "123213",
+      "address": "123123",
+      "roles": "user"
     }
   ]
 }

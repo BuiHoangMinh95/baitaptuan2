@@ -19,11 +19,13 @@ export class AdminListComponent implements OnInit {
     this.addAdminForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
+      repeatPassword: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       fullName: ['', Validators.required],
       phoneNumber: ['', Validators.required],
       address: ['', Validators.required],
-    });
+      roles: ['', Validators.required],
+    }, { validators: [this.passwordMatchValidator] });
 
     this.editAdminForm = this.fb.group({
       username: ['', Validators.required],
@@ -32,8 +34,17 @@ export class AdminListComponent implements OnInit {
       fullName: ['', Validators.required],
       phoneNumber: ['', Validators.required],
       address: ['', Validators.required],
+      roles: ['user', Validators.required],
     });
   }
+   // Getters for easy access to form controls
+   get username() { return this.addAdminForm.get('username'); }
+   get password() { return this.addAdminForm.get('password'); }
+   get email() { return this.addAdminForm.get('email'); }
+   get fullName() { return this.addAdminForm.get('fullName'); }
+   get phoneNumber() { return this.addAdminForm.get('phoneNumber'); }
+   get address() { return this.addAdminForm.get('address'); }
+   get roles() { return this.addAdminForm.get('roles'); }
 
   ngOnInit() {
     this.loadAdmins();
@@ -71,8 +82,38 @@ export class AdminListComponent implements OnInit {
           console.error('Error adding admin:', error);
         }
       );
+    } else {
+      // Form is invalid, show error messages or handle accordingly
+      this.validateAllFormFields(this.addAdminForm);
     }
   }
+
+  validateAllFormFields(formGroup: FormGroup) {
+    // Mark all fields as touched to trigger validation messages
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field)!; // Add the non-null assertion operator here
+      if (control instanceof FormGroup) {
+        this.validateAllFormFields(control);
+      } else {
+        control.markAsTouched({ onlySelf: true });
+      }
+    });
+  }
+
+  passwordMatchValidator(formGroup: FormGroup) {
+    const password = formGroup.get('password')?.value;
+    const repeatPassword = formGroup.get('repeatPassword')?.value;
+  
+    // Check if password and repeatPassword match
+    if (password !== repeatPassword) {
+      formGroup.get('repeatPassword')?.setErrors({ mismatch: true });
+    } else {
+      formGroup.get('repeatPassword')?.setErrors(null);
+    }
+  
+    return null;
+  }
+
 
   openEditAdminForm(adminId: string) {
     const selectedAdmin = this.admins.find((admin) => admin.id === adminId);
@@ -85,6 +126,7 @@ export class AdminListComponent implements OnInit {
         fullName: selectedAdmin.fullName,
         phoneNumber: selectedAdmin.phoneNumber,
         address: selectedAdmin.address,
+        roles: selectedAdmin.roles,
       });
       this.isEditAdminFormOpen = true;
     }

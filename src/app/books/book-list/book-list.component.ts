@@ -24,6 +24,7 @@ export class BookListComponent implements OnInit {
   newBookForm: FormGroup;
   updateBookForm: FormGroup ;
   isUpdateModalOpen: boolean = false;
+  isAddNewModalOpen: boolean = false;
   
   constructor(
     private booksService: BooksService, 
@@ -70,6 +71,14 @@ export class BookListComponent implements OnInit {
     this.getBooks();
     this.getCategories();
    
+  }
+  openAddBookForm() {
+    this.isAddNewModalOpen = true;
+  }
+
+  closeAddBookForm() {
+    this.isAddNewModalOpen = false;
+    this.newBookForm.reset();
   }
 
   getBooks(): void {
