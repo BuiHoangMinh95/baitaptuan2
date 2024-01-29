@@ -40,7 +40,7 @@ export class CartComponent implements OnInit {
   }
 
   clearCart(): void {
-    // Add logic to clear the entire cart
+    this.cartService.clearCart(); // Assuming you have a method like this in your service
   }
 
   calculateTotal(): number {

@@ -79,5 +79,10 @@ export class CartService {
     const totalQuantity = this.getTotalQuantity();
     this.totalQuantitySubject.next(totalQuantity);
   }
-
+  clearCart(): void {
+    this.cartItems = []; // Clear the cartItems array
+    this.cartItemsSubject.next(this.cartItems); // Update the cartItemsSubject
+    this.saveToLocalStorage(); // Save changes to local storage
+    this.updateTotalQuantity(); // Update the total quantity
+  }
 }
