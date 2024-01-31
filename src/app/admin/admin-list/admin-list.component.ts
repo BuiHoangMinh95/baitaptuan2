@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AdminService } from '../admin.service';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-admin-list',
@@ -15,6 +16,9 @@ export class AdminListComponent implements OnInit {
   editAdminForm: FormGroup;
   selectedAdminId!: string | null;
 
+  // Add ViewChild to get a reference to MatPaginator
+  @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
+  
   constructor(private adminService: AdminService, private fb: FormBuilder) {
     this.addAdminForm = this.fb.group({
       username: ['', Validators.required],
@@ -49,16 +53,25 @@ export class AdminListComponent implements OnInit {
   ngOnInit() {
     this.loadAdmins();
   }
-
-  loadAdmins() {
-    this.adminService.getAdmins().subscribe(
+  totalItems: number = 0;
+  // Update loadAdmins method to fetch a specific page
+  loadAdmins(page: number = 1, pageSize: number = 2) {
+    this.adminService.getAdmins(page, pageSize).subscribe(
       (data) => {
-        this.admins = data;
+        console.log(data);
+        this.admins = data.data;
+        this.totalItems = data.items; // Update the totalItems property
       },
       (error) => {
         console.error('Error loading admins:', error);
       }
     );
+  }
+  // Add a method to handle page change events
+  onPageChange(event: PageEvent) {
+    console.log(event);
+    const newPage = event.pageIndex + 1;
+    this.loadAdmins(newPage);
   }
 
   openAddAdminForm() {
@@ -163,4 +176,5 @@ export class AdminListComponent implements OnInit {
       }
     );
   }
+  
 }

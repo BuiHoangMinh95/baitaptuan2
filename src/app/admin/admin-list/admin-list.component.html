@@ -37,6 +37,16 @@
       </tr>
     </tbody>
   </table>
+  <!-- Add this section at the bottom of your template -->
+  <div class="relative">
+    <mat-paginator
+      [pageSizeOptions]="[1,2,3]"
+      [pageSize]="2"
+      [length]="totalItems"
+      (page)="onPageChange($event)"
+    ></mat-paginator>
+  </div>
+ 
 
   <!-- Add admin form modal -->
   <div class="modal" tabindex="-1" role="dialog" [ngClass]="{'show': isAddAdminFormOpen}">
@@ -122,9 +132,6 @@
       </div>
     </div>
   </div>
-
-
-  <!-- ... -->
 
 <!-- Edit admin form modal -->
 <div class="modal" tabindex="-1" role="dialog" [ngClass]="{'show': isEditAdminFormOpen}">

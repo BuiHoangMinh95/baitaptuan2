@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CartModule } from './cart/cart.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AdminModule } from './admin/admin.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AdminModule } from './admin/admin.module';
     BooksModule,
     CartModule,
     AppRoutingModule,
-    AdminModule
+    AdminModule,
+    BrowserAnimationsModule
   ],
   providers: [
     FakeApiService  

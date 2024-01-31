@@ -5,13 +5,15 @@ import { FormsModule,ReactiveFormsModule  } from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminListComponent } from './admin-list/admin-list.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    MatPaginatorModule
   ],
   declarations: [
     AdminListComponent

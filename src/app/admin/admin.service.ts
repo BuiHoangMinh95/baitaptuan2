@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -10,8 +10,13 @@ export class AdminService {
 
   constructor(private http: HttpClient) {}
 
-  getAdmins(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+  getAdmins(page: number, pageSize: number): Observable<any> {
+    // Use HttpParams to include query parameters in the request
+    const params = new HttpParams()
+      .set('_page', page.toString())
+      .set('_per_page', pageSize.toString());
+    // Pass the params as the second argument to the get method
+    return this.http.get<any>(this.apiUrl, { params });
   }
 
   getAdminById(id: string): Observable<any> {
