@@ -58,7 +58,6 @@ export class AdminListComponent implements OnInit {
   loadAdmins(page: number = 1, pageSize: number = 2) {
     this.adminService.getAdmins(page, pageSize).subscribe(
       (data) => {
-        console.log(data);
         this.admins = data.data;
         this.totalItems = data.items; // Update the totalItems property
       },
@@ -71,7 +70,7 @@ export class AdminListComponent implements OnInit {
   onPageChange(event: PageEvent) {
     console.log(event);
     const newPage = event.pageIndex + 1;
-    this.loadAdmins(newPage);
+    this.loadAdmins(newPage, event.pageSize);
   }
 
   openAddAdminForm() {
